@@ -1,32 +1,64 @@
 <?php
 $array = [
     1,
-    6,       //2
-    15,
-    'text',    //2
-    44,
-    -3.23,   //2
+    [
+        6,
+        15,          //2
+        'text',
+        44,
+    ],
+    -3.23,
     1,
     [
-        2,  //2
-        5,
-        -1, //2
+        2,
+        5,           //2
+        [
+            7,
+            'text',  //2
+        ],
+        -1,
         3,
     ],
-    2, //2
-    4,
-    6, //2
+    2,
+    [
+        4,
+        6,           //2
+        [
+            6,
+            3,       //2
+            1,
+            [
+                1,
+                8,     //2
+                [
+                    3,
+                    2,    //2
+                    1,
+                ],
+            ],
+        ],
+        6,
+    ],
 ];
-for($i = 1; $i < count($array); $i+=2) {
-    if (is_string($array[$i])) continue;
-    if (is_array($array[$i])) {
-        for($j = 0; $j < count($array[$i]); $j+=2) {
-            if (is_string($array[$i][$j])) continue;
-            $sum += $array[$i][$j];
-        }
-        if(count($array[$i]) % 2 == 0) $i--;
+$array2 = [];
+$index = 0;
+for($i = 0; $i < count($array); $i++) {
+    if(is_string($array[1])) continue;
+    if(!is_array($array[1])) $sum += $array[1];
+    if(is_array($array[$i])) {
+       $array2[$index] = $array[$i];
+       $index++;
     }
-    else $sum += $array[$i];
+}
+for($i = 0; $i < count($array2); $i++) {
+    for($j = 0; $j < count($array2[$i]); $j++) {
+        if (is_array($array2[$i][$j]))  {
+            array_push($array2, $array2[$i][$j]);
+        }
+    }
+    if(is_string($array2[$i][1])) continue;
+    $sum += $array2[$i][1];
+
 }
 echo 'Сумма всех вторых элементов = '. $sum . '<br>'.'<br>';
 /////////////////////////////////////////////////////////////
