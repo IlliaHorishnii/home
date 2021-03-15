@@ -5,7 +5,7 @@ function factory(...$funcs)
     $noname = function ($funcs) {
         $funcs();
     };
-    for ($i = 0; $i < count($funcs); $i++) {
+    for ($i = 0; $i < count($funcs); $i++) {       /// Перебор массива для получения всех введеных названий функций
         $noname($funcs[$i]);
     }
 }
@@ -49,7 +49,7 @@ function putCsv(array $arr) {                    //  Запись csv файла
     $csv_write = fopen('new.csv', 'w');
 
     function getArray($arr_in) {              // Проверка многоуровневых массивов
-        static $arr_in2;
+        static $arr_in2;            // Статик для видимости финального массива при возврате
         foreach($arr_in as $key => $value) {
 
             if (is_array($value)) {
