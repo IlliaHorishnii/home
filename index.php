@@ -86,8 +86,8 @@ function putCsv(array $arr) {                    //  Запись csv файла
 
 function getCsv(){
     $csv = fopen('new.csv', 'r');
-     while(($csv_read = fgetcsv($csv, 0)) !== false) {
-         static $row = 0;
+     $row = 0;
+    while(($csv_read = fgetcsv($csv, 0)) !== false) {
         $row++;
        $num = count($csv_read);
        echo $row.' строка: ';
