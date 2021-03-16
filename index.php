@@ -1,21 +1,19 @@
 <?php
 
-function factory(...$funcs)
-{
-    $noname = function ($funcs) {
-        $funcs();
+
+    $factory = function ($name) {
+        return $name();
     };
-    for ($i = 0; $i < count($funcs); $i++) {       /// Перебор массива для получения всех введеных названий функций
-        $noname($funcs[$i]);
-    }
-}
+
+
 function first() {
     echo 1 . '<br>';
 }
 function second() {
     echo 2 . '<br><br><br>';
 }
-factory('first', 'second');
+$factory('first');
+$factory('second');
 
 ///////////////////////////////////////// 2 часть
 $arr = [
