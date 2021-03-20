@@ -1,103 +1,103 @@
 <?php
 
-function factory(...$funcs)
+abstract class animals
 {
-    $noname = function ($funcs) {
-        $funcs();
-    };
-    for ($i = 0; $i < count($funcs); $i++) {       /// Перебор массива для получения всех введеных названий функций
-        $noname($funcs[$i]);
+ abstract function info_a(string $type, int $age):string;
+
+}
+
+class predators extends animals
+{
+    function info_a(string $type, int $age):string
+    {
+        return '<br>Тип: Хищник<br>' . 'Вид: ' . $type . '<br>Возраст: ' . $age . '<br>';
     }
 }
-function first() {
-    echo 1 . '<br>';
-}
-function second() {
-    echo 2 . '<br><br><br>';
-}
-factory('first', 'second');
 
-///////////////////////////////////////// 2 часть
-$arr = [
-    'array' => [
-        1,
-        'test',
-        [
-            2,
-            'x' => 3,
-            [
-                4,
-                5,
-              'k' =>  [
-                    'z'=> 6,
-                    7,
-                ],
-                8
-            ]
-        ],
-    ],
-    45 => 'second_text',
-    'man' => 'русский',
+class herbivores extends animals
+{
+    function info_a(string $type, int $age):string
+    {
+        return '<br>Тип: Травоядное<br>' . 'Вид: ' . $type . '<br>Возраст: ' . $age . '<br>';
+    }
+}
+
+abstract class vehicles
+{
+    abstract function info_v(string $mark, string $model):string;
+}
+
+class boats extends vehicles
+{
+    function info_v(string $mark, string $model):string
+    {
+        return '<br>Тип: Катер<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
+    }
+}
+
+class cars extends vehicles
+{
+    function info_v(string $mark, string $model):string
+    {
+        return '<br>Тип: Легковое авто<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
+    }
+}
+
+class trucks extends vehicles
+{
+    function info_v(string $mark, string $model):string
+    {
+        return '<br>Тип: Грузовик<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
+    }
+}
+
+class helper_array
+{
+   static function Array($array) {
+       $num = 1;
+    foreach($array as $key => $value) {
+
+            echo 'Ключ ' . $num . ' элемента: ' . $key . '<br>Содержание ' . $num . ' элемента: ' . $value . '<br>';
+            $num++;
+    }
+
+ }
+}
+
+class helper_string
+{
+    static function String($string) {
+        echo '<h1>'.$string.'</h1><br>';
+    }
+}
+
+$obj_A_1 = new predators();
+var_export($obj_A_1->info_a('Гепард', 10));
+
+$obj_A_2 = new herbivores();
+var_export($obj_A_2->info_a('Бобик', 3));
+
+$obj_V_1 = new boats();
+var_export($obj_V_1->info_v('Admiral', 'Vetta'));
+
+$obj_V_2 = new cars();
+var_export($obj_V_2->info_v('Mazda', 'CX-5'));
+
+$obj_V_3 = new trucks();
+var_export($obj_V_3->info_v('ГАЗель', 'NEXT'));
+
+helper_string::String('Тест строки');
+
+$array = [
+  5 => 'first',
     [
-        3,
-        'русский',
-        5
+        2,
+        'key' => 1,
+        [
+            'string',
+            4 => 1
+            ]
     ],
+    'word' => 8,
 ];
-
-function putCsv(array $arr) {                    //  Запись csv файла
-    $csv_write = fopen('new.csv', 'w');
-
-    function getArray($arr_in) {              // Проверка многоуровневых массивов
-        static $arr_in2;            // Статик для видимости финального массива при возврате
-        foreach($arr_in as $key => $value) {
-
-            if (is_array($value)) {
-                unset($arr_in[$key]);
-                $arr_in = array_merge($arr_in, $value);
-                getArray($arr_in);
-
-                return $arr_in2;
-            }
-        }
-        foreach($arr_in as $key => $value) {       // Смена кодировки русских строк
-            if (is_string($value)) {
-                $arr_in[$key] = mb_convert_encoding($value, 'cp1251', 'utf-8');
-
-            }
-        }
-        $arr_in2 = $arr_in;
-        return $arr_in;
-    }
-
-    foreach($arr as $key => $value) {
-
-        if(!is_array($value)) {
-            $arr[$key] = [$value];
-            $value = $arr[$key];
-        }
-        fputcsv($csv_write, getArray($value), ';');
-    }
-
-    fclose($csv_write);
-}
-
-//////////////////////////////////////////////////   - Чтение csv файла
-
-function getCsv(){
-    $csv = fopen('new.csv', 'r');
-     while(($csv_read = fgetcsv($csv, 0)) !== false) {
-         static $row = 0;
-        $row++;
-       $num = count($csv_read);
-       echo $row.' строка: ';
-       for($i = 0; $i < $num; $i++) {
-           echo mb_convert_encoding($csv_read[$i], 'utf-8', 'cp1251'). ' ';
-       }
-       echo '<br>';
-   }
-   fclose($csv);
-}
-putCsv($arr);
-getCsv();
-
+helper_array::Array($array);
