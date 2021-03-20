@@ -2,13 +2,13 @@
 
 abstract class animals
 {
- abstract function info_a(string $type, int $age):string;
+ abstract function infoAnimals(string $type, int $age):string;
 
 }
 
 class predators extends animals
 {
-    function info_a(string $type, int $age):string
+    function infoAnimals(string $type, int $age):string
     {
         return '<br>Тип: Хищник<br>' . 'Вид: ' . $type . '<br>Возраст: ' . $age . '<br>';
     }
@@ -16,7 +16,7 @@ class predators extends animals
 
 class herbivores extends animals
 {
-    function info_a(string $type, int $age):string
+    function infoAnimals(string $type, int $age):string
     {
         return '<br>Тип: Травоядное<br>' . 'Вид: ' . $type . '<br>Возраст: ' . $age . '<br>';
     }
@@ -24,12 +24,12 @@ class herbivores extends animals
 
 abstract class vehicles
 {
-    abstract function info_v(string $mark, string $model):string;
+    abstract function infoVehicles(string $mark, string $model):string;
 }
 
 class boats extends vehicles
 {
-    function info_v(string $mark, string $model):string
+    function infoVehicles(string $mark, string $model):string
     {
         return '<br>Тип: Катер<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
     }
@@ -37,7 +37,7 @@ class boats extends vehicles
 
 class cars extends vehicles
 {
-    function info_v(string $mark, string $model):string
+    function infoVehicles(string $mark, string $model):string
     {
         return '<br>Тип: Легковое авто<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
     }
@@ -45,15 +45,15 @@ class cars extends vehicles
 
 class trucks extends vehicles
 {
-    function info_v(string $mark, string $model):string
+    function infoVehicles(string $mark, string $model):string
     {
         return '<br>Тип: Грузовик<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
     }
 }
 
-class helper_array
+class helperArray
 {
-   static function Array($array) {
+   public static function ArrayInfo($array) {
        $num = 1;
     foreach($array as $key => $value) {
 
@@ -64,29 +64,29 @@ class helper_array
  }
 }
 
-class helper_string
+class helperString
 {
-    static function String($string) {
+    public static function TextChanger($string) {
         echo '<h1>'.$string.'</h1><br>';
     }
 }
 
 $obj_A_1 = new predators();
-var_export($obj_A_1->info_a('Гепард', 10));
+var_export($obj_A_1->infoAnimals('Гепард', 10));
 
 $obj_A_2 = new herbivores();
-var_export($obj_A_2->info_a('Бобик', 3));
+var_export($obj_A_2->infoAnimals('Бобик', 3));
 
 $obj_V_1 = new boats();
-var_export($obj_V_1->info_v('Admiral', 'Vetta'));
+var_export($obj_V_1->infoVehicles('Admiral', 'Vetta'));
 
 $obj_V_2 = new cars();
-var_export($obj_V_2->info_v('Mazda', 'CX-5'));
+var_export($obj_V_2->infoVehicles('Mazda', 'CX-5'));
 
 $obj_V_3 = new trucks();
-var_export($obj_V_3->info_v('ГАЗель', 'NEXT'));
+var_export($obj_V_3->infoVehicles('ГАЗель', 'NEXT'));
 
-helper_string::String('Тест строки');
+helperString::TextChanger('Тест строки');
 
 $array = [
   5 => 'first',
@@ -100,4 +100,4 @@ $array = [
     ],
     'word' => 8,
 ];
-helper_array::Array($array);
+helperArray::ArrayInfo($array);
