@@ -2,13 +2,13 @@
 
 abstract class animals
 {
- abstract function infoAnimals(string $type, int $age):string;
+ abstract public function infoAnimals(string $type, int $age):string;
 
 }
 
 class predators extends animals
 {
-    function infoAnimals(string $type, int $age):string
+    public function infoAnimals(string $type, int $age):string
     {
         return '<br>Тип: Хищник<br>' . 'Вид: ' . $type . '<br>Возраст: ' . $age . '<br>';
     }
@@ -16,7 +16,7 @@ class predators extends animals
 
 class herbivores extends animals
 {
-    function infoAnimals(string $type, int $age):string
+    public function infoAnimals(string $type, int $age):string
     {
         return '<br>Тип: Травоядное<br>' . 'Вид: ' . $type . '<br>Возраст: ' . $age . '<br>';
     }
@@ -24,12 +24,12 @@ class herbivores extends animals
 
 abstract class vehicles
 {
-    abstract function infoVehicles(string $mark, string $model):string;
+     abstract public function infoVehicles(string $mark, string $model):string;
 }
 
 class boats extends vehicles
 {
-    function infoVehicles(string $mark, string $model):string
+    public function infoVehicles(string $mark, string $model):string
     {
         return '<br>Тип: Катер<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
     }
@@ -37,7 +37,7 @@ class boats extends vehicles
 
 class cars extends vehicles
 {
-    function infoVehicles(string $mark, string $model):string
+    public function infoVehicles(string $mark, string $model):string
     {
         return '<br>Тип: Легковое авто<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
     }
@@ -45,7 +45,7 @@ class cars extends vehicles
 
 class trucks extends vehicles
 {
-    function infoVehicles(string $mark, string $model):string
+    public function infoVehicles(string $mark, string $model):string
     {
         return '<br>Тип: Грузовик<br>' . 'Марка: ' . $mark . '<br>Модель: ' . $model . '<br>';
     }
