@@ -26,7 +26,7 @@ trait PowerCounter
     {
         if($engineType === 'petrol')
         {
-            return $power = $volume * 0.85 *(2500/120);
+            return $power = $volume * 0.85 *(2500/120); //Мощность = объём двигателя * среднее эффективное давление * (частота вращения/120)
 
         }
         if($engineType === 'diesel')
