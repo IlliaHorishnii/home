@@ -1,103 +1,85 @@
 <?php
 
-function factory(...$funcs)
+interface Carcass
 {
-    $noname = function ($funcs) {
-        $funcs();
-    };
-    for ($i = 0; $i < count($funcs); $i++) {       /// Перебор массива для получения всех введеных названий функций
-        $noname($funcs[$i]);
+    public function carcass():string;
+}
+
+interface WheelsFormula
+{
+    public function wheelsFormula():string;
+}
+
+interface EnginesType
+{
+    public function enginesType():string;
+}
+
+interface Transmission
+{
+    public function transmission():string;
+}
+
+trait PowerCounter
+{
+    public function powerCounter($volume, $engineType):int
+    {
+        if($engineType === 'petrol')
+        {
+            return $power = $volume * 0.85 *(2500/120);
+
+        }
+        if($engineType === 'diesel')
+        {
+            return $power = $volume * 2.5 *(2500/120);
+        }
     }
 }
-function first() {
-    echo 1 . '<br>';
-}
-function second() {
-    echo 2 . '<br><br><br>';
-}
-factory('first', 'second');
 
-///////////////////////////////////////// 2 часть
-$arr = [
-    'array' => [
-        1,
-        'test',
-        [
-            2,
-            'x' => 3,
-            [
-                4,
-                5,
-              'k' =>  [
-                    'z'=> 6,
-                    7,
-                ],
-                8
-            ]
-        ],
-    ],
-    45 => 'second_text',
-    'man' => 'русский',
-    [
-        3,
-        'русский',
-        5
-    ],
-];
+class NissanRogue implements Carcass, WheelsFormula, EnginesType, Transmission
+{
+    use PowerCounter;
 
-function putCsv(array $arr) {                    //  Запись csv файла
-    $csv_write = fopen('new.csv', 'w');
+    protected $carcass = 'SUV';
 
-    function getArray($arr_in) {              // Проверка многоуровневых массивов
-        static $arr_in2;            // Статик для видимости финального массива при возврате
-        foreach($arr_in as $key => $value) {
+    protected $wheelsFormula = '2x2';
 
-            if (is_array($value)) {
-                unset($arr_in[$key]);
-                $arr_in = array_merge($arr_in, $value);
-                getArray($arr_in);
+    protected $enginesType = 'petrol';
 
-                return $arr_in2;
-            }
-        }
-        foreach($arr_in as $key => $value) {       // Смена кодировки русских строк
-            if (is_string($value)) {
-                $arr_in[$key] = mb_convert_encoding($value, 'cp1251', 'utf-8');
+    protected $transmission = 'auto';
 
-            }
-        }
-        $arr_in2 = $arr_in;
-        return $arr_in;
+    protected $volume = '2.5';
+
+    public function carcass():string
+    {
+        return $this->carcass;
     }
 
-    foreach($arr as $key => $value) {
-
-        if(!is_array($value)) {
-            $arr[$key] = [$value];
-            $value = $arr[$key];
-        }
-        fputcsv($csv_write, getArray($value), ';');
+    public function wheelsFormula():string
+    {
+        return $this->wheelsFormula;
     }
 
-    fclose($csv_write);
+    public function enginesType():string
+    {
+        return $this->enginesType;
+    }
+
+    public function transmission():string
+    {
+        return $this->transmission;
+    }
+
+    public function callPowerCounter():void
+    {
+        echo 'Мощность двигателя: ' . $this->powerCounter($this->volume, $this->enginesType) . ' кДж';
+    }
 }
 
-//////////////////////////////////////////////////   - Чтение csv файла
+$obj = new NissanRogue();
+echo 'Тип кузова: ' . $obj->carcass() . '<br>';
+echo 'Формула колес: ' . $obj->wheelsFormula() . '<br>';
+echo 'Тип двигателя: ' . $obj->enginesType() . '<br>';
+echo 'Тип коробки передач: ' . $obj->transmission() . '<br>';
 
-function getCsv(){
-    $csv = fopen('new.csv', 'r');
-     while(($csv_read = fgetcsv($csv, 0)) !== false) {
-         static $row = 0;
-        $row++;
-       $num = count($csv_read);
-       echo $row.' строка: ';
-       for($i = 0; $i < $num; $i++) {
-           echo mb_convert_encoding($csv_read[$i], 'utf-8', 'cp1251'). ' ';
-       }
-       echo '<br>';
-   }
-   fclose($csv);
-}
-putCsv($arr);
-getCsv();
-
+$obj->callPowerCounter();
