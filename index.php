@@ -15,13 +15,7 @@ class Database extends PDO
         $dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
         parent::__construct( $dns, $this->user, $this->pass );
     }
-
-
-
-    public function connect()
-    {
-        return $this->_connection ? $this->_connection : null;
-    }
+    
 
     public function select(string $sql): array
     {
