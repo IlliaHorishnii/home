@@ -63,11 +63,14 @@ foreach($sum as $sum ) {
 /// Реализовать выборку задвоенных контрагентов
 echo "<br>"."<br>"."Реализовать выборку задвоенных контрагентов" ."<br>" ."<br>" ."<br>";
 
-$sql = "SELECT `name`, COUNT(*) as dublicated
-                                FROM `partners_list`
-                                GROUP BY `name`
-                                HAVING dublicated > 1
-                                ORDER BY dublicated DESC";
+$sql = " SELECT * 
+    FROM partners_list 
+    WHERE `name` IN (
+        SELECT `name` 
+        FROM partners_list 
+         GROUP BY `name` 
+        HAVING count(`name`) > 1)
+        ORDER BY `name`";
 
 $partners = $connection->select($sql);
 foreach($partners as $partner ) {
