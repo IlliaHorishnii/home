@@ -1,85 +1,95 @@
 <?php
 
-interface Carcass
+class Database extends PDO
 {
-    public function carcass():string;
-}
 
-interface WheelsFormula
-{
-    public function wheelsFormula():string;
-}
+    private $engine = 'mysql';
+    private $host = 'localhost';
+    private $database = 'firstbase';
+    private $user = 'root';
+    private $pass = 'root';
 
-interface EnginesType
-{
-    public function enginesType():string;
-}
 
-interface Transmission
-{
-    public function transmission():string;
-}
-
-trait PowerCounter
-{
-    public function powerCounter($volume, $engineType):int
+    function __construct()
     {
-        if($engineType === 'petrol')
-        {
-            return $power = $volume * 0.85 *(2500/120);
-
-        }
-        if($engineType === 'diesel')
-        {
-            return $power = $volume * 2.5 *(2500/120);
-        }
-    }
-}
-
-class NissanRogue implements Carcass, WheelsFormula, EnginesType, Transmission
-{
-    use PowerCounter;
-
-    protected $carcass = 'SUV';
-
-    protected $wheelsFormula = '2x2';
-
-    protected $enginesType = 'petrol';
-
-    protected $transmission = 'auto';
-
-    protected $volume = '2.5';
-
-    public function carcass():string
-    {
-        return $this->carcass;
+        $dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
+        parent::__construct( $dns, $this->user, $this->pass );
     }
 
-    public function wheelsFormula():string
+
+
+    public function connect()
     {
-        return $this->wheelsFormula;
+        return $this->_connection ? $this->_connection : null;
     }
 
-    public function enginesType():string
+    public function select(string $sql): array
     {
-        return $this->enginesType;
+        $query = $this->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function transmission():string
+    public function query(string $sql)
     {
-        return $this->transmission;
+        $this->pdo->query($sql);
     }
 
-    public function callPowerCounter():void
-    {
-        echo 'Мощность двигателя: ' . $this->powerCounter($this->volume, $this->enginesType) . ' кДж';
-    }
+
+}
+$connection = new Database();
+//////////////////////////////////////////
+/// Реализовать выборку всех заказов по одному из контрагентов
+echo "<br>"."<br>"."Реализовать выборку всех заказов по одному из контрагентов" ."<br>" ."<br>" ."<br>";
+
+$sql = "SELECT * FROM `orders_list` 
+                INNER JOIN partners_list on partners_list.orderId=orders_list.id 
+                WHERE partners_list.name ='Андрей Серый' ";
+
+$orders = $connection->select($sql);
+foreach($orders as $order ) {
+    print_r($order);
+    echo '<br>';
+}
+//////////////////////////////////////////
+/// Реализовать выборку по сумме всех заказов на контрагентов
+echo "<br>"."<br>"."Реализовать выборку по сумме всех заказов на контрагентов" ."<br>" ."<br>" ."<br>";
+
+$sql = "SELECT partners_list.*,sum(payments.sum) as total
+                                FROM `payments`
+                                INNER JOIN partners_list on partners_list.orderId=payments.partnerId
+                                GROUP BY partners_list.name";
+$sum = $connection->select($sql);
+foreach($sum as $sum ) {
+    print_r($sum);
+    echo '<br>';
 }
 
-$obj = new NissanRogue();
-echo 'Тип кузова: ' . $obj->carcass() . '<br>';
-echo 'Формула колес: ' . $obj->wheelsFormula() . '<br>';
-echo 'Тип двигателя: ' . $obj->enginesType() . '<br>';
-echo 'Тип коробки передач: ' . $obj->transmission() . '<br>';
+//////////////////////////////////////////
+/// Реализовать выборку задвоенных контрагентов
+echo "<br>"."<br>"."Реализовать выборку задвоенных контрагентов" ."<br>" ."<br>" ."<br>";
 
-$obj->callPowerCounter();
+$sql = "SELECT `name`, COUNT(*) as dublicated
+                                FROM `partners_list`
+                                GROUP BY `name`
+                                HAVING dublicated > 1
+                                ORDER BY dublicated DESC";
+
+$partners = $connection->select($sql);
+foreach($partners as $partner ) {
+    print_r($partner);
+    echo '<br>';
+}
+
+//////////////////////////////////////////
+/// Реализовать выборку всех оплаченных заказов
+echo "<br>"."<br>"."Реализовать выборку всех оплаченных заказов" ."<br>" ."<br>" ."<br>";
+
+$sql = "SELECT * FROM `orders_list` WHERE orders_list.status = 'paid'";
+
+$paid = $connection->select($sql);
+foreach($paid as $paid) {
+    print_r($paid);
+    echo '<br>';
+}
+?>
