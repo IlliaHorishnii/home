@@ -1,7 +1,7 @@
 <?php
 namespace Observer;
 
-class Sub extends Subscribing
+class Subscriber extends Subscribing
 {
     private $type = 'default';
 

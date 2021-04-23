@@ -2,9 +2,9 @@
 
 namespace Observer;
 
-class GoldSub extends Subscribing
+class PlatinumSubscriber extends Subscribing
 {
-    private $type = 'gold';
+    private $type = 'platinum';
 
     public function __construct($name)
     {

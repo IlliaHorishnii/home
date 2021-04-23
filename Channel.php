@@ -28,7 +28,7 @@ class Channel implements \SplSubject
 
     public function info()
     {
-        $this->content = 'received a new video from';
+        $this->content = ' received a new video from';
         $this->notify();
     }
 

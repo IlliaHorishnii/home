@@ -1,30 +1,30 @@
 <?php
 require_once "Channel.php";
 require_once "Subscribing.php";
-require_once "Sub.php";
-require_once "SilverSub.php";
-require_once "GoldSub.php";
-require_once "PlatinumSub.php";
+require_once "Subscriber.php";
+require_once "SilverSubscriber.php";
+require_once "GoldSubscriber.php";
+require_once "PlatinumSubscriber.php";
 
 use Observer\Channel;
 use Observer\Subscribing;
-use Observer\Sub;
-use Observer\SilverSub;
-use Observer\GoldSub;
-use Observer\PlatinumSub;
+use Observer\Subscriber;
+use Observer\SilverSubscriber;
+use Observer\GoldSubscriber;
+use Observer\PlatinumSubscriber;
 
 $channel = new Channel('Dude Perfect');
 
-$allen = new Sub('Allen');
+$allen = new Subscriber('Allen');
 $allen->newSub($channel, $allen);
 
-$jim = new SilverSub('Jim');
+$jim = new SilverSubscriber('Jim');
 $jim->newSub($channel, $jim);
 
-$alex = new GoldSub('Alex');
+$alex = new GoldSubscriber('Alex');
 $alex->newSub($channel, $alex);
 
-$linda = new PlatinumSub('Linda');
+$linda = new PlatinumSubscriber('Linda');
 $linda->newSub($channel, $linda);
 
 $alex->deleteSub($channel, $alex);

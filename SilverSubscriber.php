@@ -1,7 +1,7 @@
 <?php
 namespace Observer;
 
-class SilverSub extends Subscribing
+class SilverSubscriber extends Subscribing
 {
     private $type = 'silver';
 
