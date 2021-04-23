@@ -12,7 +12,7 @@ class Subscribing implements \SplObserver
 
     public function update(\SplSubject $subject)
     {
-        echo $this->name.' <b>'.$subject->getContent().'</b><br>';
+        echo $this->name.$subject->getContent().'<br>';
     }
 }
 

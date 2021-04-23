@@ -14,11 +14,11 @@ class PlatinumSub extends Subscribing
     public function newSub($channel, $sub)
     {
         $channel->attach($sub);
-        echo 'a '.$this->type.' user has subscribed the channel<br>';
+        echo 'a '.$this->type.' user has subscribed the channel <br>';
     }
     public function deleteSub($channel, $sub)
     {
         $channel->detach($sub);
-        echo 'a '.$this->type.' user has unsubscribed the channel<br>';
+        echo 'a '.$this->type.' user has unsubscribed the channel <br>';
     }
 }

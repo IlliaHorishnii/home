@@ -27,7 +27,7 @@ $alex->newSub($channel, $alex);
 $linda = new PlatinumSub('Linda');
 $linda->newSub($channel, $linda);
 
-$channel->info();
-
 $alex->deleteSub($channel, $alex);
 $channel->info();
+
+

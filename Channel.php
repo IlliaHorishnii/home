@@ -34,7 +34,7 @@ class Channel implements \SplSubject
 
     public function getContent()
     {
-        return $this->content." {$this->name} channel";
+        return $this->content." {$this->name} channel ";
     }
 
     public function notify()
