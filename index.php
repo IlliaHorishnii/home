@@ -1,33 +1,24 @@
 <?php
-require_once "Channel.php";
-require_once "Subscribing.php";
-require_once "Subscriber.php";
-require_once "SilverSubscriber.php";
-require_once "GoldSubscriber.php";
-require_once "PlatinumSubscriber.php";
+ require_once('Context.php');
+ require_once('Subscription.php');
+ require_once('DefaultSubscription.php');
+ require_once('SilverSubscription.php');
+ require_once('GoldSubscription.php');
 
-use Observer\Channel;
-use Observer\Subscribing;
-use Observer\Subscriber;
-use Observer\SilverSubscriber;
-use Observer\GoldSubscriber;
-use Observer\PlatinumSubscriber;
+ use Strategy\Context;
+ use Strategy\Subscription;
+ use Strategy\DefaultSubscription;
+ use Strategy\SilverSubscription;
+ use Strategy\GoldSubscription;
 
-$channel = new Channel('Dude Perfect');
+$obj = new DefaultSubscription('Gabe');
+PHP_EOL;
+echo $obj->getSubType()."<br>";
 
-$allen = new Subscriber('Allen');
-$allen->newSub($channel, $allen);
+$obj = new SilverSubscription('Yuri');
+PHP_EOL;
+echo $obj->photoLoader('http://somelink.com')."<br>";
 
-$jim = new SilverSubscriber('Jim');
-$jim->newSub($channel, $jim);
-
-$alex = new GoldSubscriber('Alex');
-$alex->newSub($channel, $alex);
-
-$linda = new PlatinumSubscriber('Linda');
-$linda->newSub($channel, $linda);
-
-$alex->deleteSub($channel, $alex);
-$channel->info();
-
-
+$obj = new GoldSubscription('Van');
+PHP_EOL;
+echo $obj->onlineCall("Gabe")."<br>";
